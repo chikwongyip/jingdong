@@ -2,8 +2,20 @@
   <div class="wrapper">
     <div class="position">
       <span class="iconfont position__icon">&#xe7f1;</span>
-      中山星恒园123sad123123123123123123asdas13121sadasdasdasda
+      中山星恒园
       <span class="iconfont position__notice">&#xe887;</span>
+    </div>
+
+    <div class="search">
+      <span class="iconfont">&#xe648;</span>
+      <span class="search__text"> 双11劲惠来袭!</span>
+    </div>
+    <div class="banner">
+      <img
+        class="banner__img"
+        src="http://www.dell-lee.com/imgs/vue3/banner.jpg"
+        alt=""
+      />
     </div>
   </div>
   <div class="docker">
@@ -55,6 +67,31 @@
     right: 0;
     top: 0.17rem;
     font-size: 0.2rem;
+  }
+}
+.search {
+  margin-bottom: 0.12rem;
+  line-height: 0.32rem;
+  background: #f5f5f5;
+
+  border-radius: 0.16rem;
+
+  .iconfont {
+    position: relative;
+    top: 0.02rem;
+    left: 0.01rem;
+    font-size: 0.2rem;
+    padding: 0 0.06rem 0 0.12rem;
+    display: inline-block;
+  }
+  &__text {
+    font-size: 0.14rem;
+    color: #b7b7b7;
+  }
+}
+.banner {
+  &__img {
+    width: 100%;
   }
 }
 .docker {
