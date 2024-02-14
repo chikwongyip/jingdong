@@ -6,15 +6,12 @@
       <div class="nearby__item__content">
         <div class="nearby__item__content__title">{{ item.title }}</div>
         <div class="nearby__item__content__tags">
-          <span class="nearby__item__content__tags__tag">{{
-            item.tags[0]
-          }}</span>
-          <span class="nearby__item__content__tags__tag">{{
-            item.tags[1]
-          }}</span>
-          <span class="nearby__item__content__tags__tag">{{
-            item.tags[2]
-          }}</span>
+          <span
+            class="nearby__item__content__tags__tag"
+            v-for="(tag, index) in item.tags"
+            :key="index"
+            >{{ tag }}</span
+          >
         </div>
         <p class="nearby__item__content__highlight">{{ item.desc }}</p>
       </div>
@@ -78,6 +75,7 @@ export default {
       {
         id: 8,
         title: "沃尔玛",
+        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
         tags: ["用售1万", "起送￥0", "运费"],
         desc: "VIP尊享满89元减4元",
       },
