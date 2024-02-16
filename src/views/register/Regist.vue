@@ -1,3 +1,24 @@
+<script>
+import { useRouter } from "vue-router";
+export default {
+  name: "RegisterView",
+  setup() {
+    const router = useRouter();
+    const handleRegister = () => {
+      localStorage.isLogin = true;
+      router.push({ name: "Home" });
+    };
+    const handleLogin = () => {
+      router.push({ name: "Login" });
+    };
+    return {
+      handleRegister,
+      handleLogin,
+    };
+  },
+};
+</script>
+
 <template>
   <div class="wrapper">
     <img
@@ -9,8 +30,7 @@
       <input
         class="wrapper__input__content"
         type="text"
-        placeholder="请输入账号"
-        v-model="data.username"
+        placeholder="请输入手机号"
       />
     </div>
     <div class="wrapper__input">
@@ -18,44 +38,23 @@
         class="wrapper__input__content"
         type="password"
         placeholder="请输入密码"
-        v-model="data.password"
       />
     </div>
-    <div class="wrapper__login-button" @click="handleLogin">登录</div>
-    <div class="wrapper__login-link" @click="handleRegister">立即注册</div>
+    <div class="wrapper__input">
+      <input
+        class="wrapper__input__content"
+        type="password"
+        placeholder="确认密码"
+      />
+    </div>
+    <div class="wrapper__register-button" @click="handleRegister">注册</div>
+    <div class="wrapper__register-link" @click="handleLogin">
+      已有账号去登陆
+    </div>
   </div>
 </template>
-<script>
-import { useRouter } from "vue-router";
-import { reactive } from "vue";
-import { post } from "../../uilts/request";
 
-export default {
-  name: "LoginView",
-  setup() {
-    const router = useRouter();
-    const data = reactive({ username: "", password: "" });
-    const handleLogin = async () => {
-      const result = await post("/api/user/login", data);
-      if (result?.errno === 0) {
-        localStorage.isLogin = true;
-        await router.push({ name: "Home" });
-      } else {
-        alert("登录失败");
-      }
-    };
-    const handleRegister = () => {
-      router.push({ name: "Register" });
-    };
-    return {
-      handleLogin,
-      handleRegister,
-      data,
-    };
-  },
-};
-</script>
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "../../style/variables.scss";
 
 .wrapper {
@@ -90,7 +89,7 @@ export default {
       }
     }
   }
-  &__login-button {
+  &__register-button {
     margin: 0.32rem 0.4rem 0.16rem 0.4rem;
     line-height: 0.48rem;
     background: #0091ff;
@@ -100,7 +99,7 @@ export default {
     font-size: 0.16rem;
     text-align: center;
   }
-  &__login-link {
+  &__register-link {
     font-size: 0.14rem;
     color: content-notice-fontcolor;
     text-align: center;

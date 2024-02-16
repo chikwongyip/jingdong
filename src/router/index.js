@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/home/Home.vue";
 import Login from "../views/login/Login.vue";
+import Register from "@/views/register/Regist.vue";
 const routes = [
   {
     path: "/",
@@ -20,6 +21,19 @@ const routes = [
       }
     },
   },
+  {
+    path: "/Register",
+    name: "Register",
+    component: Register,
+    beforeEnter: (to, from, next) => {
+      const isLogin = localStorage.isLogin;
+      if (isLogin) {
+        next({ name: "Home" });
+      } else {
+        next();
+      }
+    },
+  },
 ];
 
 const router = createRouter({
@@ -28,10 +42,9 @@ const router = createRouter({
 });
 router.beforeEach((to, from, next) => {
   const isLogin = localStorage.isLogin;
-  if (isLogin || to.name === "Login") {
+  if (isLogin || to.name === "Login" || to.name === "Register") {
     next();
   } else {
-    console.log("未登录");
     next({ name: "Login" }); // 跳转到登录页面
   }
 });
