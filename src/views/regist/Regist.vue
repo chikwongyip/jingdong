@@ -23,7 +23,7 @@ export default {
   <div class="wrapper">
     <img
       class="wrapper__img"
-      src="http://www.dell-lee.com/imgs/vue3/user.png"
+      src="https://www.dell-lee.com/imgs/vue3/user.png"
       alt=""
     />
     <div class="wrapper__input">
@@ -54,7 +54,7 @@ export default {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../../style/variables.scss";
 
 .wrapper {
