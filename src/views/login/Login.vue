@@ -24,28 +24,53 @@
     <div class="wrapper__login-button" @click="handleLogin">登录</div>
     <div class="wrapper__login-link" @click="handleRegister">立即注册</div>
   </div>
+  <toast v-if="data.show" :message="data.message"></toast>
 </template>
 <script>
 import { useRouter } from "vue-router";
 import { reactive } from "vue";
 import { post } from "../../uilts/request";
+import { Toast } from "../src/components/Toast.vue";
 
 export default {
   name: "LoginView",
+  components: {
+    Toast,
+  },
   setup() {
     const router = useRouter();
-    const data = reactive({ username: "", password: "" });
+    const data = reactive({
+      username: "",
+      password: "",
+      show: false,
+      message: "",
+    });
     const handleLogin = async () => {
-      const result = await post("/api/user/login", data);
-      if (result?.errno === 0) {
-        localStorage.isLogin = true;
-        await router.push({ name: "Home" });
-      } else {
-        alert("登录失败");
+      try {
+        const result = await post("/api/user/login", {
+          username: data.username,
+          password: data.password,
+        });
+        if (result?.errno === 0) {
+          localStorage.isLogin = true;
+          await router.push({ name: "Home" });
+        } else {
+          showMessage("登录失败");
+        }
+      } catch (e) {
+        showMessage("登录失败");
       }
     };
     const handleRegister = () => {
       router.push({ name: "Register" });
+    };
+    const showMessage = (message) => {
+      data.show = "true";
+      data.message = message;
+      setTimeout(() => {
+        data.show = false;
+        data.message = "";
+      }, 2000);
     };
     return {
       handleLogin,
