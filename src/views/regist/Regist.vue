@@ -1,9 +1,14 @@
 <script>
 import { useRouter } from "vue-router";
+import Toast, { toastHandle } from "../../components/Toast.vue";
 export default {
   name: "RegisterView",
+  components: {
+    Toast,
+  },
   setup() {
     const router = useRouter();
+    const { toastData, showMessage } = toastHandle();
     const handleRegister = () => {
       localStorage.isLogin = true;
       router.push({ name: "Home" });
@@ -14,6 +19,8 @@ export default {
     return {
       handleRegister,
       handleLogin,
+      toastData,
+      showMessage,
     };
   },
 };
@@ -52,6 +59,7 @@ export default {
       已有账号去登陆
     </div>
   </div>
+  <toast v-if="toastData.show">{{ toastData.message }}</toast>
 </template>
 
 <style lang="scss" scoped>

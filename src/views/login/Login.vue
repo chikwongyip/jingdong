@@ -24,13 +24,13 @@
     <div class="wrapper__login-button" @click="handleLogin">登录</div>
     <div class="wrapper__login-link" @click="handleRegister">立即注册</div>
   </div>
-  <toast v-if="data.show" :message="data.message"></toast>
+  <toast v-if="toastData.show" :message="toastData.message"></toast>
 </template>
 <script>
 import { useRouter } from "vue-router";
 import { reactive } from "vue";
 import { post } from "../../uilts/request";
-import { Toast } from "../src/components/Toast.vue";
+import Toast, { toastHandle } from "../../components/Toast.vue";
 
 export default {
   name: "LoginView",
@@ -42,9 +42,8 @@ export default {
     const data = reactive({
       username: "",
       password: "",
-      show: false,
-      message: "",
     });
+    const { toastData, showMessage } = toastHandle();
     const handleLogin = async () => {
       try {
         const result = await post("/api/user/login", {
@@ -64,18 +63,13 @@ export default {
     const handleRegister = () => {
       router.push({ name: "Register" });
     };
-    const showMessage = (message) => {
-      data.show = "true";
-      data.message = message;
-      setTimeout(() => {
-        data.show = false;
-        data.message = "";
-      }, 2000);
-    };
+
     return {
       handleLogin,
       handleRegister,
       data,
+      toastData,
+      showMessage,
     };
   },
 };

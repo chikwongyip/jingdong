@@ -2,7 +2,24 @@
   <div class="toast">{{ message }}</div>
 </template>
 <script>
+import { reactive } from "vue";
+export const toastHandle = () => {
+  const toastData = reactive({
+    show: false,
+    message: "",
+  });
+  const showMessage = (message) => {
+    toastData.show = true;
+    toastData.message = message;
+    setTimeout(() => {
+      toastData.show = false;
+      toastData.message = "";
+    }, 2000);
+  };
+  return { toastData, showMessage };
+};
 export default {
+  name: "ToastView",
   props: ["message"],
 };
 </script>
