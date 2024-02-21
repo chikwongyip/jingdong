@@ -1,6 +1,40 @@
 <script>
 import { useRouter } from "vue-router";
 import Toast, { toastHandle } from "../../components/Toast.vue";
+import { reactive } from "vue";
+import { post } from "@/uilts/request";
+// 处理注册逻辑
+const handleRegister = (showMessage, router) => {
+  const data = reactive({
+    username: "",
+    password: "",
+    confirm: "",
+  });
+  const register = async () => {
+    try {
+      const result = await post("/api/user/login", {
+        username: data.username,
+        password: data.password,
+      });
+      if (result?.errno === 0) {
+        localStorage.isLogin = true;
+        router.push({ name: "Home" });
+      } else {
+        showMessage("注册失败");
+      }
+    } catch (e) {
+      showMessage("请求失败");
+    }
+  };
+  return { data, register };
+};
+// 处理登录逻辑
+const handleLogin = (router) => {
+  const login = () => {
+    router.push({ name: "Login" });
+  };
+  return { login };
+};
 export default {
   name: "RegisterView",
   components: {
@@ -9,16 +43,12 @@ export default {
   setup() {
     const router = useRouter();
     const { toastData, showMessage } = toastHandle();
-    const handleRegister = () => {
-      localStorage.isLogin = true;
-      router.push({ name: "Home" });
-    };
-    const handleLogin = () => {
-      router.push({ name: "Login" });
-    };
+    const { data, register } = handleRegister(showMessage, router);
+    const { login } = handleLogin(router);
     return {
-      handleRegister,
-      handleLogin,
+      data,
+      register,
+      login,
       toastData,
       showMessage,
     };
@@ -37,7 +67,8 @@ export default {
       <input
         class="wrapper__input__content"
         type="text"
-        placeholder="请输入手机号"
+        placeholder="请输入账号密码"
+        v-bind="data.username"
       />
     </div>
     <div class="wrapper__input">
@@ -45,6 +76,7 @@ export default {
         class="wrapper__input__content"
         type="password"
         placeholder="请输入密码"
+        v-bind="data.password"
       />
     </div>
     <div class="wrapper__input">
@@ -52,12 +84,11 @@ export default {
         class="wrapper__input__content"
         type="password"
         placeholder="确认密码"
+        v-bind="data.confirm"
       />
     </div>
-    <div class="wrapper__register-button" @click="handleRegister">注册</div>
-    <div class="wrapper__register-link" @click="handleLogin">
-      已有账号去登陆
-    </div>
+    <div class="wrapper__register-button" @click="register">注册</div>
+    <div class="wrapper__register-link" @click="login">已有账号去登陆</div>
   </div>
   <toast v-if="toastData.show">{{ toastData.message }}</toast>
 </template>

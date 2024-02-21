@@ -21,8 +21,8 @@
         v-model="data.password"
       />
     </div>
-    <div class="wrapper__login-button" @click="handleLogin">登录</div>
-    <div class="wrapper__login-link" @click="handleRegister">立即注册</div>
+    <div class="wrapper__login-button" @click="login">登录</div>
+    <div class="wrapper__login-link" @click="register">立即注册</div>
   </div>
   <toast v-if="toastData.show" :message="toastData.message"></toast>
 </template>
@@ -32,6 +32,37 @@ import { reactive } from "vue";
 import { post } from "../../uilts/request";
 import Toast, { toastHandle } from "../../components/Toast.vue";
 
+// 处理登录
+const handleLogin = (showMessage, router) => {
+  const data = reactive({
+    username: "",
+    password: "",
+  });
+  const login = async () => {
+    try {
+      const result = await post("/api/user/login", {
+        username: data.username,
+        password: data.password,
+      });
+      if (result?.errno === 0) {
+        localStorage.isLogin = true;
+        await router.push({ name: "Home" });
+      } else {
+        showMessage("登录失败");
+      }
+    } catch (e) {
+      showMessage("登录失败");
+    }
+  };
+  return { data, login };
+};
+// 处理注册
+const handleRegister = (router) => {
+  const register = () => {
+    router.push({ name: "Register" });
+  };
+  return { register };
+};
 export default {
   name: "LoginView",
   components: {
@@ -39,37 +70,15 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const data = reactive({
-      username: "",
-      password: "",
-    });
     const { toastData, showMessage } = toastHandle();
-    const handleLogin = async () => {
-      try {
-        const result = await post("/api/user/login", {
-          username: data.username,
-          password: data.password,
-        });
-        if (result?.errno === 0) {
-          localStorage.isLogin = true;
-          await router.push({ name: "Home" });
-        } else {
-          showMessage("登录失败");
-        }
-      } catch (e) {
-        showMessage("登录失败");
-      }
-    };
-    const handleRegister = () => {
-      router.push({ name: "Register" });
-    };
-
+    const { data, login } = handleLogin(showMessage, router);
+    const { register } = handleRegister(router);
     return {
-      handleLogin,
-      handleRegister,
+      login,
+      register,
       data,
       toastData,
-      showMessage,
+      // showMessage,
     };
   },
 };
