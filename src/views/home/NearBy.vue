@@ -19,68 +19,33 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
+import { get } from "../src/uilts/request";
+import Toast, { toastHandle } from "../../components/Toast.vue";
+const handleRequestData = () => {
+  const getNearby = async () => {
+    try {
+      const result = await get("api/list/hot");
+      if (result?.errno === 0) {
+        return result;
+      } else {
+      }
+    } catch (e) {}
+  };
+  return { getNearby };
+};
 export default {
   name: "NearBy",
+  components: {
+    Toast,
+  },
   setup() {
-    const nearbyList = [
-      {
-        id: 1,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "基础运费￥5"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 2,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 3,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 4,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 5,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 6,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 7,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-      {
-        id: 8,
-        title: "沃尔玛",
-        imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-        tags: ["用售1万", "起送￥0", "运费"],
-        desc: "VIP尊享满89元减4元",
-      },
-    ];
-    return { nearbyList };
+    const nearbyList = ref([]);
+    const { toastData, showMessage } = toastHandle();
+    const { getNearby } = handleRequestData();
+    let result = getNearby();
+
+    return { nearbyList, toastData, showMessage };
   },
 };
 </script>

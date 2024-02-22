@@ -12,7 +12,7 @@ const handleRegister = (showMessage, router) => {
   });
   const register = async () => {
     try {
-      const result = await post("/api/user/login", {
+      const result = await post("/api/user/register", {
         username: data.username,
         password: data.password,
       });
@@ -89,8 +89,8 @@ export default {
     </div>
     <div class="wrapper__register-button" @click="register">注册</div>
     <div class="wrapper__register-link" @click="login">已有账号去登陆</div>
+    <toast v-if="toastData.show">{{ toastData.message }}</toast>
   </div>
-  <toast v-if="toastData.show">{{ toastData.message }}</toast>
 </template>
 
 <style lang="scss" scoped>
