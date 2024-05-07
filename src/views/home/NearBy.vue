@@ -17,34 +17,35 @@
       </div>
     </div>
   </div>
+  <toast v-if="toastData.show" :message="toastData.message"></toast>
 </template>
 <script>
 import { ref } from "vue";
 import { get } from "../src/uilts/request";
 import Toast, { toastHandle } from "../../components/Toast.vue";
-const handleRequestData = () => {
+const handleRequestData = (showMessage) => {
   const getNearby = async () => {
     try {
       const result = await get("api/list/hot");
       if (result?.errno === 0) {
         return result;
       } else {
+        showMessage("获取数据失败");
       }
-    } catch (e) {}
+    } catch (e) {
+      showMessage("获取数据失败");
+    }
   };
   return { getNearby };
 };
 export default {
   name: "NearBy",
-  components: {
-    Toast,
-  },
+  components: { Toast },
   setup() {
     const nearbyList = ref([]);
     const { toastData, showMessage } = toastHandle();
     const { getNearby } = handleRequestData();
-    let result = getNearby();
-
+    getNearby();
     return { nearbyList, toastData, showMessage };
   },
 };
