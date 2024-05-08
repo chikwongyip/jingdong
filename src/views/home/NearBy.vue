@@ -21,7 +21,8 @@
 </template>
 <script>
 import { ref } from "vue";
-import { get } from "../src/uilts/request";
+
+import { get } from "../../../src/uilts/request";
 import Toast, { toastHandle } from "../../components/Toast.vue";
 const handleRequestData = (showMessage) => {
   const getNearby = async () => {
