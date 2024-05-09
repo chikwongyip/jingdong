@@ -16,7 +16,7 @@ const handleRegister = (showMessage, router) => {
         username: data.username,
         password: data.password,
       });
-      if (result?.errno === 0) {
+      if (result?.errcode === 0) {
         localStorage.isLogin = true;
         router.push({ name: "Home" });
       } else {

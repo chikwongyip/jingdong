@@ -21,15 +21,14 @@
 </template>
 <script>
 import { ref } from "vue";
-
 import { get } from "../../../src/uilts/request";
 import Toast, { toastHandle } from "../../components/Toast.vue";
 const handleRequestData = (showMessage) => {
   const getNearby = async () => {
     try {
       const result = await get("api/list/hot");
-      if (result?.errno === 0) {
-        return result;
+      if (result?.errcode === 0) {
+        return result?.data;
       } else {
         showMessage("获取数据失败");
       }
@@ -45,8 +44,10 @@ export default {
   setup() {
     const nearbyList = ref([]);
     const { toastData, showMessage } = toastHandle();
-    const { getNearby } = handleRequestData();
-    getNearby();
+    const { getNearby } = handleRequestData(showMessage);
+    getNearby().then((result) => {
+      nearbyList.value = result;
+    });
     return { nearbyList, toastData, showMessage };
   },
 };

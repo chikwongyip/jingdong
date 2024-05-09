@@ -44,7 +44,7 @@ const handleLogin = (showMessage, router) => {
         username: data.username,
         password: data.password,
       });
-      if (result?.errno === 0) {
+      if (result?.errcode === 0) {
         localStorage.isLogin = true;
         await router.push({ name: "Home" });
       } else {
