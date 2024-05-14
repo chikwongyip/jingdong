@@ -44,6 +44,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "../../style/variables.scss";
 .wrapper {
   padding: 0 0.2rem;
 }
@@ -61,12 +62,12 @@ export default {
     flex: 1;
     line-height: 0.32rem;
     border-radius: 16rem;
-    background: #f5f5f5;
+    background: $search-bgColor;
     display: flex;
     &__icon {
       width: 0.44rem;
       align-items: center;
-      color: #b7b7b7;
+      color: $search-fontColor;
       font-size: 0.16rem;
       padding-left: 0.12rem;
     }

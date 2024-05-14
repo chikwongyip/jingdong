@@ -112,7 +112,7 @@ export default {
 .search {
   margin-bottom: 0.12rem;
   line-height: 0.32rem;
-  background: #f5f5f5;
+  background: $search-bgColor;
 
   border-radius: 0.16rem;
 
@@ -126,7 +126,7 @@ export default {
   }
   &__text {
     font-size: 0.14rem;
-    color: #b7b7b7;
+    color: $search-fontColor;
   }
 }
 .banner {
@@ -155,7 +155,7 @@ export default {
 }
 .gap {
   height: 0.1rem;
-  background: #f1f1f1;
+  background: $content-bgColor;
   margin: 0 -0.18rem;
 }
 </style>
