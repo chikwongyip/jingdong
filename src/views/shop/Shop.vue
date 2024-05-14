@@ -1,10 +1,14 @@
 <template>
   <div class="wrapper">
     <div class="search">
-      <div class="search__back iconfont">&#xe662;</div>
+      <div class="search__back iconfont" @click="handleBackClick">&#xe662;</div>
       <div class="search__content">
-        <span class="search__content__icon"></span>
-        <span class="search__content_input"></span>
+        <span class="search__content__icon iconfont">&#xe648;</span>
+        <input
+          type="text"
+          class="search__content__input"
+          placeholder="搜索商品"
+        />
       </div>
     </div>
     <shop-info :item="item"></shop-info>
@@ -12,12 +16,14 @@
 </template>
 <script>
 import ShopInfo from "@/components/shopInfo.vue";
+import { useRouter } from "vue-router";
 export default {
   name: "ShopIndex",
   components: {
     ShopInfo,
   },
   setup() {
+    const router = useRouter();
     const item = {
       id: 1,
       name: "沃尔玛",
@@ -27,8 +33,12 @@ export default {
       expressPrice: 5,
       slogan: "vip 尊享满89减5",
     };
+    const handleBackClick = () => {
+      router.back();
+    };
     return {
       item,
+      handleBackClick,
     };
   },
 };
@@ -44,7 +54,7 @@ export default {
     width: 0.3rem;
     height: 0.32rem;
     line-height: 0.32rem;
-    font-size: 0.25rem;
+    font-size: 0.3rem;
     color: #b6b6b6;
   }
   &__content {
@@ -55,7 +65,10 @@ export default {
     display: flex;
     &__icon {
       width: 0.44rem;
-      height: 0.32rem;
+      align-items: center;
+      color: #b7b7b7;
+      font-size: 0.16rem;
+      padding-left: 0.12rem;
     }
     &__input {
       height: 0.32rem;
@@ -64,6 +77,11 @@ export default {
       background: none;
       width: 100%;
       padding-right: 0.2rem;
+      color: #333;
+      font-size: 0.14rem;
+      &::placeholder {
+        color: #333;
+      }
     }
   }
 }

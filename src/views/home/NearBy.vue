@@ -1,11 +1,9 @@
 <template>
   <div class="nearby">
     <h3 class="nearby__title">附件店铺</h3>
-    <shop-info
-      v-for="item in nearbyList"
-      :key="item.id"
-      :item="item"
-    ></shop-info>
+    <router-link v-for="item in nearbyList" :key="item.id" to="/shop">
+      <shop-info :item="item"></shop-info>
+    </router-link>
   </div>
   <toast v-if="toastData.show" :message="toastData.message"></toast>
 </template>
@@ -52,6 +50,9 @@ export default {
     font-size: 0.16rem;
     color: $content-fontcolor;
     font-weight: normal;
+  }
+  a {
+    text-decoration: none;
   }
 }
 </style>
