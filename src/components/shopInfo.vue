@@ -10,13 +10,13 @@
     >
       <div class="shop__content__title">{{ item.title }}</div>
       <div class="shop__content__tags">
-        <span class="shop__content__tag">月售: {{ item.sales }}</span>
-        <span class="shop__content__tag">起送: {{ item.expressLimit }}</span>
-        <span class="shop__content__tag"
-          >基础运费：: {{ item.expressLimit }}</span
+        <span class="shop__content__tag"> 月售:{{ item.sales }}</span>
+        <span class="shop__content__tag"> 起送:{{ item.expressLimit }}</span>
+        <span class="shop__content__tag">
+          基础运费:{{ item.expressPrice }}</span
         >
       </div>
-      <p class="shop__content__highlight">{{ item.desc }}</p>
+      <p class="shop__content__highlight">{{ item.slogan }}</p>
     </div>
   </div>
 </template>
@@ -56,12 +56,12 @@ export default {
       font-size: 0.13rem;
       color: $content-fontcolor;
       &__tag {
-        margin-right: 0.2rem;
+        margin-left: 0.16rem;
       }
     }
 
     &__highlight {
-      margin-top: 0.08rem;
+      margin-top: 0.16rem;
       line-height: 0.18rem;
       font-size: 0.13rem;
       color: #e93b3b;
