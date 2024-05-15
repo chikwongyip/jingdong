@@ -11,33 +11,56 @@
         />
       </div>
     </div>
-    <shop-info :item="item"></shop-info>
+    <shop-info :item="data.item" v-show="data.item.imgUrl"></shop-info>
+    <Content></Content>
   </div>
 </template>
 <script>
 import ShopInfo from "@/components/shopInfo.vue";
-import { useRouter } from "vue-router";
+import Content from "./Content.vue";
+import { useRouter, useRoute } from "vue-router";
+import { get } from "../../uilts/request";
+import { reactive } from "vue";
+// 获取当前商户信息
+const getCurrentShop = () => {
+  const route = useRoute();
+  const data = reactive({
+    item: {},
+  });
+  const getItemData = async () => {
+    const result = await get("/api/shop/" + route.params.id);
+    if (result?.errcode === 0) {
+      data.item = result.data;
+    }
+  };
+
+  return {
+    data,
+    getItemData,
+  };
+};
+// 处理页面跳转
+const handleRoute = () => {
+  const router = useRouter();
+  const handleBackClick = () => {
+    router.back();
+  };
+  return {
+    handleBackClick,
+  };
+};
 export default {
   name: "ShopIndex",
   components: {
     ShopInfo,
+    Content,
   },
   setup() {
-    const router = useRouter();
-    const item = {
-      id: 1,
-      name: "沃尔玛",
-      imgUrl: "http://www.dell-lee.com/imgs/vue3/near.png",
-      sales: 1000,
-      expressLimit: 0,
-      expressPrice: 5,
-      slogan: "vip 尊享满89减5",
-    };
-    const handleBackClick = () => {
-      router.back();
-    };
+    const { data, getItemData } = getCurrentShop();
+    const { handleBackClick } = handleRoute();
+    getItemData();
     return {
-      item,
+      data,
       handleBackClick,
     };
   },
